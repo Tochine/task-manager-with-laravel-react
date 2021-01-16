@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 7.3
+
+services:
+  - sqlite
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+  - cp .env.example .env
+
+script:
+  - vendor/bin/phpunit
+  - php artisan test
