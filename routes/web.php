@@ -16,15 +16,11 @@ use Illuminate\Support\Facades\Route;
 // Route::post('/books', 'BooksController@store');
 // Route::patch('/books/{book}', 'BooksController@update');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/{path?}', function () {
+    return view('layouts.app');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
