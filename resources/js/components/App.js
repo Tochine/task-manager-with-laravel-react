@@ -6,6 +6,14 @@ import {
     Route,
     Link
   } from "react-router-dom";
+import { Button, Container } from 'react-bootstrap';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+
+// pages
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 class App extends Component {
     state = {
@@ -14,51 +22,34 @@ class App extends Component {
     
     render(){
         return (
-            <Router>
-                <div>
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to={`${this.state.PUBLIC_URL}`}>Home</Link>
-                            </li>
-                            <li>
-                                <Link to={`${this.state.PUBLIC_URL}about`}>About</Link>
-                            </li>
-                            <li>
-                                <Link to={`${this.state.PUBLIC_URL}users`}>Users</Link>
-                            </li>
-                        </ul>
-                    </nav>
+            <div>
+                <Router>
+                    <Header />
+                    <div>
+                        <Container>
 
-                    <Switch>
-                        <Route path={`${this.state.PUBLIC_URL}about`}>
-                            <About />
-                        </Route>
-                        <Route path={`${this.state.PUBLIC_URL}users`}>
-                            <Users />
-                        </Route>
-                        <Route path={`${this.state.PUBLIC_URL}`}>
-                            <Home />
-                        </Route>
-                    </Switch>
-                 </div>
-            </Router>
+                            <Switch>
+                                <Route path={`${this.state.PUBLIC_URL}about`}>
+                                    <About />
+                                </Route>
+                                <Route path={`${this.state.PUBLIC_URL}contact`}>
+                                    <Contact />
+                                </Route>
+                                <Route path={`${this.state.PUBLIC_URL}`}>
+                                    <Home />
+                                </Route>
+                            </Switch>
+
+                            <Footer />
+                        </Container>
+
+                    </div>
+                </Router>
+            </div>  
         );
     }
    
 }
-
-function Home() {
-    return <h2>Home</h2>;
-  }
-  
-  function About() {
-    return <h2>About</h2>;
-  }
-  
-  function Users() {
-    return <h2>Users</h2>;
-  }
 
 export default App;
 
