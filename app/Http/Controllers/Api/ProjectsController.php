@@ -22,6 +22,7 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = $this->projectRepository->getAll();
+        //$projects = Project::all();
         return response()->json([
             'successs' => true,
             'message' => 'Project list',
@@ -56,9 +57,22 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($project)
     {
-        //
+        $project = $this->projectRepository->findById($project);
+        if(is_null($project)){
+            return response()->json([
+                'status' => false,
+                'message' => "No project found.",
+                'data' => NULL
+            ]);
+        }else{
+            return response()->json([
+                'successs' => true,
+                'message' => 'Project details',
+                'data' => $project
+            ]);
+        }  
     }
 
     /**

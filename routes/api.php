@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::apiResource('/projects', 'Api\ProjectsController');
+Route::get('/projects', 'Api\ProjectsController@index');
+Route::group(['namespace' => 'Api'], function(){
+    Route::get('/projects', 'ProjectsController@index')->name('projects');
+    Route::get('/project/{project}', 'ProjectsController@show')->name('show.project');
+});
+//Route::apiResource('/projects', 'Api\ProjectsController');
 Route::apiResource('/tasks', 'Api\TasksController');
 Route::apiResource('/users', 'Api\UsersController');
