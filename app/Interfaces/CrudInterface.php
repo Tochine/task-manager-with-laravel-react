@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Interfaces;
+use Illuminate\Http\Request;
 
 interface CrudInterface
 {
@@ -26,9 +27,9 @@ interface CrudInterface
 
 
     public function findById($id);
-    public function create();
-    public function edit($id); 
-    public function delete();
+    public function create(Request $request);
+    public function edit(Request $request, $id); 
+    public function delete(Request $request, $id);
 
 
 }

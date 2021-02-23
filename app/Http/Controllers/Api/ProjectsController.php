@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Repositories\ProjectRepository;
+use Validator;
 
 class ProjectsController extends Controller
 {
@@ -48,7 +49,39 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'user_id' => 'required'
+        ],[
+            'name.required' => 'Please give project name',
+            'description.required' => 'Please give the project description',
+            'user_id.required' => 'User id needed'
+        ]);
+
+        if($validatedData->fails()){
+            return response()->json([
+                'status' =>  false,
+                'errror' => $validatedData->errors()
+            ]);
+        }
+
+        $project = $this->projectRepository->create($request);
+
+        if(!is_null($project)){
+            return response()->json([
+                'status' => true,
+                'message' => "Project successfully stored",
+                'data' => $project
+            ]);
+        }else{
+            return response()->json([
+                'status' =>  false,
+                'message' => "Oops! Something went wrong",
+                'data' => NULL
+            ]);
+        }
+        
     }
 
     /**
@@ -81,7 +114,7 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         //
     }
@@ -95,7 +128,46 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $project = $this->projectRepository->findById($id);
+        if(is_null($project)){
+            return response()->json([
+                'status' => false,
+                'message' => 'Project not found',
+                'data' => NULL
+            ]);
+        }
+        $validatedData = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'user_id' => 'required'
+        ],[
+            'name.required' => 'Please give project name',
+            'description.required' => 'Please give the project description',
+            'user_id.required' => 'User id needed'
+        ]);
+
+        if($validatedData->fails()){
+            return response()->json([
+                'status' =>  false,
+                'errror' => $validatedData->errors()
+            ]);
+        }
+
+        $project = $this->projectRepository->edit($request, $id);
+
+        if(!is_null($project)){
+            return response()->json([
+                'status' => true,
+                'message' => "Project successfully updated",
+                'data' => $project
+            ]);
+        }else{
+            return response()->json([
+                'status' =>  false,
+                'message' => "Oops! Something went wrong",
+                'data' => NULL
+            ]);
+        }
     }
 
     /**
@@ -104,7 +176,7 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
     }

@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/projects', 'Api\ProjectsController@index');
 Route::group(['namespace' => 'Api'], function(){
+    // Project routes
     Route::get('/projects', 'ProjectsController@index')->name('projects');
-    Route::get('/project/{project}', 'ProjectsController@show')->name('show.project');
+    Route::get('/project/{project}/view', 'ProjectsController@show')->name('show.project');
+    Route::post('/project/store', 'ProjectsController@store')->name('store.project');
 });
 //Route::apiResource('/projects', 'Api\ProjectsController');
 Route::apiResource('/tasks', 'Api\TasksController');
